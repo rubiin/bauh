@@ -6,7 +6,7 @@ build-backend = "setuptools.build_meta"
 name = "bauh"
 description = "Graphical interface to manage Linux applications (AppImage, Arch / AUR, Flatpak, Snap and Web)"
 license = {file = "LICENSE"}
-requires-python = ">=3.6"
+requires-python = ">=3.14"
 dynamic = ["version"]
 readme = "README.md"
 authors = [{name = "Vinicius Moreira", email = "vinicius_fmoreira@hotmail.com"}]
@@ -22,7 +22,7 @@ classifiers = [
 ]
 
 dependencies = [
-    "pyqt5 >= 5.12",
+    "pyqt6 >= 6.11.0",
     "requests >= 2.18",
     "colorama >= 0.3.8",
     "pyyaml >= 3.13",
