@@ -48,6 +48,38 @@ To run a single test case:
 python -m unittest tests.common.test_util.SizeToByteTest
 ```
 
+# Building executables
+This project provides installed console entry points and an AppImage packaging flow.
+
+To build and install the Python package entry points locally:
+
+```bash
+python3 -m build --wheel --no-isolation
+pip install dist/*.whl
+```
+
+This installs the following commands:
+
+* `bauh`
+* `bauh-tray`
+* `bauh-cli`
+
+To build the AppImage executable package, go to `linux_dist/appimage`, set the version to package, and run the build script:
+
+```bash
+cd linux_dist/appimage
+export BAUH_VERSION=<tag-or-version>
+./build.sh
+```
+
+The AppImage build uses Docker and the files below:
+
+* `linux_dist/appimage/build.sh`
+* `linux_dist/appimage/Dockerfile`
+* `linux_dist/appimage/AppImageBuilder.yml`
+
+`BAUH_VERSION` must match a released source archive name because the AppImage recipe downloads `https://github.com/vinifmor/bauh/archive/${BAUH_VERSION}.tar.gz`.
+
 # Adding a new translation
 * To add a new translation, you will have to create a file in each directory listed below named as the first two letters of the language in the ISO format (e.g: for 'english' would be 'en'):
 - `bauh/view/resources/locale`

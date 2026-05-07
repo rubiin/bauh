@@ -1,0 +1,61 @@
+name: Build AppImage
+
+on:
+  push:
+    tags:
+      - '*'
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Release tag/version to build (must exist as a GitHub source archive)'
+        required: true
+        type: string
+
+permissions:
+  contents: read
+
+jobs:
+  build-appimage:
+    runs-on: ubuntu-22.04
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Resolve build version
+        id: version
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          if [[ "${GITHUB_EVENT_NAME}" == "workflow_dispatch" ]]; then
+            version="${{ inputs.version }}"
+          else
+            version="${GITHUB_REF_NAME}"
+          fi
+
+          if [[ -z "${version}" ]]; then
+            echo "No BAUH_VERSION was resolved" >&2
+            exit 1
+          fi
+
+          echo "version=${version}" >> "${GITHUB_OUTPUT}"
+
+      - name: Build AppImage
+        working-directory: linux_dist/appimage
+        env:
+          BAUH_VERSION: ${{ steps.version.outputs.version }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          chmod +x build.sh
+          ./build.sh
+
+      - name: Upload AppImage artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: bauh-appimage-${{ steps.version.outputs.version }}
+          if-no-files-found: error
+          path: |
+            linux_dist/appimage/*.AppImage
+            linux_dist/appimage/*.zsync
