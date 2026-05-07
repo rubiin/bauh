@@ -8,7 +8,7 @@ RUN apt-get update -y && \
     pip3 install pip==23.3.2 setuptools==69.0.3 installer==0.7.0 && \
     mkdir /build && cd /build && \
     wget https://github.com/AppImageCrafters/appimage-builder/releases/download/v0.9.2/appimage-builder-0.9.2-35e3eab-x86_64.AppImage -O appimage-builder && \
-    wget https://github.com/AppImage/AppImageKit/releases/download/13/appimagetool-x86_64.AppImage -O appimage-tool && \
+    wget https://github.com/AppImage/appimagetool/releases/download/1.9.1/appimagetool-x86_64.AppImage -O appimage-tool && \
     chmod +x appimage-tool && \
     chmod +x appimage-builder && \
     mv /build/appimage-builder /usr/local/bin/appimage-builder && \
