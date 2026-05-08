@@ -54,7 +54,8 @@ This project provides installed console entry points and an AppImage packaging f
 To build and install the Python package entry points locally:
 
 ```bash
-python3 -m build --wheel --no-isolation
+python -m pip install --upgrade pip setuptools wheel build
+python -m build --wheel --no-isolation
 pip install dist/*.whl
 ```
 
