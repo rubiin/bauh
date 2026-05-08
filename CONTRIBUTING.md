@@ -79,7 +79,7 @@ The AppImage build uses Docker and the files below:
 * `linux_dist/appimage/Dockerfile`
 * `linux_dist/appimage/AppImageBuilder.yml`
 
-`BAUH_VERSION` must match a released source archive name because the AppImage recipe downloads `https://github.com/vinifmor/bauh/archive/${BAUH_VERSION}.tar.gz`.
+`BAUH_VERSION` must match a released source archive name because the AppImage recipe downloads `https://github.com/rubiin/bauh/archive/${BAUH_VERSION}.tar.gz`.
 
 # Adding a new translation
 * To add a new translation, you will have to create a file in each directory listed below named as the first two letters of the language in the ISO format (e.g: for 'english' would be 'en'):

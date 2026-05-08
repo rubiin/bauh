@@ -10,7 +10,7 @@ permissions:
 
 jobs:
   build-wheel:
-    runs-on: ubuntu-26.04
+    runs-on: ubuntu-latest
 
     steps:
       - name: Check out repository
@@ -29,77 +29,6 @@ jobs:
       - name: Build wheel
         run: python -m build --wheel --no-isolation
 
-      - name: Generate changelog
-        id: changelog
-        run: |
-          # Get the previous tag
-          PREV_TAG=$(git tag -l | sort -V | tail -n 2 | head -n 1)
-          CURR_TAG=${{ github.ref_name }}
-
-          # Generate changelog from commits
-          if [ -z "$PREV_TAG" ]; then
-            # First release, get all commits
-            CHANGELOG=$(git log --pretty=format:"- %s" --reverse)
-          else
-            # Get commits between tags
-            CHANGELOG=$(git log ${PREV_TAG}..${CURR_TAG} --pretty=format:"- %s" --reverse)
-          fi
-
-          # Store changelog in output
-          echo "release_body<<EOF" >> $GITHUB_OUTPUT
-          echo "## Changelog" >> $GITHUB_OUTPUT
-          echo "" >> $GITHUB_OUTPUT
-          echo "$CHANGELOG" >> $GITHUB_OUTPUT
-          echo "EOF" >> $GITHUB_OUTPUT
-
-      - name: Update CHANGELOG.md
-        run: |
-          # Get current date
-          DATE=$(date +%Y-%m-%d)
-          CURR_TAG=${{ github.ref_name }}
-
-          # Get the previous tag
-          PREV_TAG=$(git tag -l | sort -V | tail -n 2 | head -n 1)
-
-          # Generate changelog from commits
-          if [ -z "$PREV_TAG" ]; then
-            # First release, get all commits
-            CHANGELOG=$(git log --pretty=format:"- %s" --reverse)
-          else
-            # Get commits between tags
-            CHANGELOG=$(git log ${PREV_TAG}..${CURR_TAG} --pretty=format:"- %s" --reverse)
-          fi
-
-          # Create new changelog entry
-          NEW_ENTRY="## [$CURR_TAG] $DATE"
-
-          # Read existing changelog
-          EXISTING=$(cat CHANGELOG.md)
-
-          # Combine and write back (keep header and insert new entry)
-          (
-            echo "# Changelog"
-            echo "All notable changes to this project will be documented in this file."
-            echo ""
-            echo ""
-            echo "The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)."
-            echo ""
-            echo "$NEW_ENTRY"
-            echo "### Changes"
-            echo "$CHANGELOG"
-            echo ""
-            # Append the rest of existing changelog (skip header lines)
-            echo "$EXISTING" | tail -n +5
-          ) > CHANGELOG.md.tmp && mv CHANGELOG.md.tmp CHANGELOG.md
-
-      - name: Commit and push changelog
-        run: |
-          git config user.name "github-actions"
-          git config user.email "github-actions@github.com"
-          git add CHANGELOG.md
-          git commit -m "chore: update changelog for ${{ github.ref_name }}" || echo "No changes to commit"
-          git push
-
       - name: Upload wheel artifact
         uses: actions/upload-artifact@v4
         with:
@@ -112,7 +41,6 @@ jobs:
         with:
           tag: ${{ github.ref_name }}
           name: Release ${{ github.ref_name }}
-          body: ${{ steps.changelog.outputs.release_body }}
           artifacts: dist/*.whl
           draft: false
           prerelease: false

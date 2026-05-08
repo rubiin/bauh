@@ -9,7 +9,7 @@ license = {file = "LICENSE"}
 requires-python = ">=3.14"
 dynamic = ["version"]
 readme = "README.md"
-authors = [{name = "Vinicius Moreira", email = "vinicius_fmoreira@hotmail.com"}]
+authors = [{name = "Roobin Bhandari", email = "roobin.bhandari@gmail.com"}]
 classifiers = [
         'Topic :: Utilities',
         'Programming Language :: Python',
@@ -45,7 +45,7 @@ bauh-tray = "bauh.app:tray"
 bauh-cli = "bauh.cli.app:main"
 
 [project.urls]
-Repository = "https://github.com/vinifmor/bauh"
+Repository = "https://github.com/rubiin/bauh"
 
 [tool.setuptools]
 license-files = ["LICENSE"]

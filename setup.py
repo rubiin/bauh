@@ -7,10 +7,10 @@ DESCRIPTION = (
     "Graphical interface to manage Linux applications (AppImage, Arch / AUR, Flatpak, Snap and Web)"
 )
 
-AUTHOR = "Vinicius Moreira"
-AUTHOR_EMAIL = "vinicius_fmoreira@hotmail.com"
+AUTHOR = "Roobin Bhandari"
+AUTHOR_EMAIL = "roobin.bhandari@gmail.com"
 NAME = 'bauh'
-URL = "https://github.com/vinifmor/" + NAME
+URL = "https://github.com/rubiin/" + NAME
 
 file_dir = os.path.dirname(os.path.abspath(__file__))
 
@@ -54,5 +54,11 @@ setup(
         'Programming Language :: Python :: 3.6',
         'Programming Language :: Python :: 3.7',
         'Programming Language :: Python :: 3.8'
+        'Programming Language :: Python :: 3.9',
+        'Programming Language :: Python :: 3.10',
+        'Programming Language :: Python :: 3.11'
+        'Programming Language :: Python :: 3.12'
+        'Programming Language :: Python :: 3.13'
+        'Programming Language :: Python :: 3.14'
     ]
 )
